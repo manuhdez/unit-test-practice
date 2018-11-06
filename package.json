@@ -1,0 +1,20 @@
+{
+  "name": "unit-testing-practice",
+  "version": "1.0.0",
+  "description": "this is a personal repository to practice javascript unit testing",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest",
+    "test:watch": "jest --watch"
+  },
+  "keywords": [
+    "unit-test",
+    "javascript",
+    "jest"
+  ],
+  "author": "manuhdez",
+  "license": "ISC",
+  "devDependencies": {
+    "jest": "^23.6.0"
+  }
+}
