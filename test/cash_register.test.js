@@ -1,8 +1,8 @@
 
 describe('CHECK CASH REGISTER', () => {
   const checkCashRegister = require('../js/cash_register').checkCashRegister;
-  const returnAmountOfCoins = require('../js/cash_register').returnAmountOfCoins;
-  const returnChangeArray = require('../js/cash_register').returnChangeArray;
+  // const returnAmountOfCoins = require('../js/cash_register').returnAmountOfCoins;
+  // const returnChangeArray = require('../js/cash_register').returnChangeArray;
 
   it('should always return an object with "status" and "change" keys', () => {
     let cashTest = checkCashRegister(19.5, 20, [["PENNY", 0.01], ["NICKEL", 0], ["DIME", 0], ["QUARTER", 0], ["ONE", 0], ["FIVE", 0], ["TEN", 0], ["TWENTY", 0], ["ONE HUNDRED", 0]]);
@@ -20,7 +20,6 @@ describe('CHECK CASH REGISTER', () => {
     expect(failDrawer.change.length).toBe(0);
   });
 
-  // TEST:
   it('should return {status: "INSUFFICIENT_FUNDS" change: []} if you cannot return the exact change.', () => {
     let inexactChange = checkCashRegister(19.5, 20, [["PENNY", 0.01], ["NICKEL", 0], ["DIME", 0], ["QUARTER", 0], ["ONE", 1], ["FIVE", 0], ["TEN", 0], ["TWENTY", 0], ["ONE HUNDRED", 0]]);
 
@@ -48,6 +47,6 @@ describe('CHECK CASH REGISTER', () => {
     expect(openDrawer.change).toEqual([["QUARTER", 0.5]]);
     // Second open drawer
     expect(secondOpenDrawer.status).toBe('OPEN');
-    expect(openDrawer.change).toEqual([["TWENTY", 60], ["TEN", 20], ["FIVE", 15], ["ONE", 1], ["QUARTER", 0.5], ["DIME", 0.2], ["PENNY", 0.04]]);
+    expect(secondOpenDrawer.change).toEqual([["TWENTY", 60], ["TEN", 20], ["FIVE", 15], ["ONE", 1], ["QUARTER", 0.5], ["DIME", 0.2], ["PENNY", 0.04]]);
   });
 });
