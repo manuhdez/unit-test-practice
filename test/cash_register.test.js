@@ -1,11 +1,9 @@
 
-describe('CHECK CASH REGISTER', () => {
-  const checkCashRegister = require('../js/cash_register').checkCashRegister;
-  // const returnAmountOfCoins = require('../js/cash_register').returnAmountOfCoins;
-  // const returnChangeArray = require('../js/cash_register').returnChangeArray;
+import checkCashRegister from '../js/cash_register';
 
+describe('CHECK CASH REGISTER', () => {
   it('should always return an object with "status" and "change" keys', () => {
-    let cashTest = checkCashRegister(19.5, 20, [["PENNY", 0.01], ["NICKEL", 0], ["DIME", 0], ["QUARTER", 0], ["ONE", 0], ["FIVE", 0], ["TEN", 0], ["TWENTY", 0], ["ONE HUNDRED", 0]]);
+    const cashTest = checkCashRegister(19.5, 20, [['PENNY', 0.01], ['NICKEL', 0], ['DIME', 0], ['QUARTER', 0], ['ONE', 0], ['FIVE', 0], ['TEN', 0], ['TWENTY', 0], ['ONE HUNDRED', 0]]);
 
     expect(typeof cashTest).toBe('object');
     expect(cashTest).toHaveProperty('status');
@@ -13,7 +11,7 @@ describe('CHECK CASH REGISTER', () => {
   });
 
   it('should return {status: "INSUFFICIENT_FUNDS" change: []} if cid is less than change due.', () => {
-    let failDrawer = checkCashRegister(19.5, 20, [["PENNY", 0.01], ["NICKEL", 0], ["DIME", 0], ["QUARTER", 0], ["ONE", 0], ["FIVE", 0], ["TEN", 0], ["TWENTY", 0], ["ONE HUNDRED", 0]]);
+    const failDrawer = checkCashRegister(19.5, 20, [['PENNY', 0.01], ['NICKEL', 0], ['DIME', 0], ['QUARTER', 0], ['ONE', 0], ['FIVE', 0], ['TEN', 0], ['TWENTY', 0], ['ONE HUNDRED', 0]]);
 
     expect(failDrawer.status).toBe('INSUFFICIENT_FUNDS');
     expect(Array.isArray(failDrawer.change)).toBe(true);
@@ -21,7 +19,7 @@ describe('CHECK CASH REGISTER', () => {
   });
 
   it('should return {status: "INSUFFICIENT_FUNDS" change: []} if you cannot return the exact change.', () => {
-    let inexactChange = checkCashRegister(19.5, 20, [["PENNY", 0.01], ["NICKEL", 0], ["DIME", 0], ["QUARTER", 0], ["ONE", 1], ["FIVE", 0], ["TEN", 0], ["TWENTY", 0], ["ONE HUNDRED", 0]]);
+    const inexactChange = checkCashRegister(19.5, 20, [['PENNY', 0.01], ['NICKEL', 0], ['DIME', 0], ['QUARTER', 0], ['ONE', 1], ['FIVE', 0], ['TEN', 0], ['TWENTY', 0], ['ONE HUNDRED', 0]]);
 
     expect(inexactChange.status).toBe('INSUFFICIENT_FUNDS');
     expect(Array.isArray(inexactChange.change)).toBe(true);
@@ -29,24 +27,23 @@ describe('CHECK CASH REGISTER', () => {
   });
 
   it('should return {status: "CLOSED", change: [...]} with cid as change if it is equal to the change due', () => {
-    let closedDrawer = checkCashRegister(19.5, 20, [["PENNY", 0.5], ["NICKEL", 0], ["DIME", 0], ["QUARTER", 0], ["ONE", 0], ["FIVE", 0], ["TEN", 0], ["TWENTY", 0], ["ONE HUNDRED", 0]]);
+    const closedDrawer = checkCashRegister(19.5, 20, [['PENNY', 0.5], ['NICKEL', 0], ['DIME', 0], ['QUARTER', 0], ['ONE', 0], ['FIVE', 0], ['TEN', 0], ['TWENTY', 0], ['ONE HUNDRED', 0]]);
 
     expect(closedDrawer.status).toBe('CLOSED');
     expect(Array.isArray(closedDrawer.change)).toBe(true);
     expect(closedDrawer.change.length).toBeGreaterThan(0);
-    expect(closedDrawer.change).toEqual([["PENNY", 0.5], ["NICKEL", 0], ["DIME", 0], ["QUARTER", 0], ["ONE", 0], ["FIVE", 0], ["TEN", 0], ["TWENTY", 0], ["ONE HUNDRED", 0]]);
+    expect(closedDrawer.change).toEqual([['PENNY', 0.5], ['NICKEL', 0], ['DIME', 0], ['QUARTER', 0], ['ONE', 0], ['FIVE', 0], ['TEN', 0], ['TWENTY', 0], ['ONE HUNDRED', 0]]);
   });
 
-  // TEST:
   it('should return {status: "OPEN", change: [...]}, with the change due in coins and bills sorted in highest to lowest order', () => {
-    let openDrawer = checkCashRegister(19.5, 20, [["PENNY", 1.01], ["NICKEL", 2.05], ["DIME", 3.1], ["QUARTER", 4.25], ["ONE", 90], ["FIVE", 55], ["TEN", 20], ["TWENTY", 60], ["ONE HUNDRED", 100]]);
-    let secondOpenDrawer = checkCashRegister(3.26, 100, [["PENNY", 1.01], ["NICKEL", 2.05], ["DIME", 3.1], ["QUARTER", 4.25], ["ONE", 90], ["FIVE", 55], ["TEN", 20], ["TWENTY", 60], ["ONE HUNDRED", 100]]);
+    const openDrawer = checkCashRegister(19.5, 20, [['PENNY', 1.01], ['NICKEL', 2.05], ['DIME', 3.1], ['QUARTER', 4.25], ['ONE', 90], ['FIVE', 55], ['TEN', 20], ['TWENTY', 60], ['ONE HUNDRED', 100]]);
+    const secondOpenDrawer = checkCashRegister(3.26, 100, [['PENNY', 1.01], ['NICKEL', 2.05], ['DIME', 3.1], ['QUARTER', 4.25], ['ONE', 90], ['FIVE', 55], ['TEN', 20], ['TWENTY', 60], ['ONE HUNDRED', 100]]);
 
     // First open drawer
     expect(openDrawer.status).toBe('OPEN');
-    expect(openDrawer.change).toEqual([["QUARTER", 0.5]]);
+    expect(openDrawer.change).toEqual([['QUARTER', 0.5]]);
     // Second open drawer
     expect(secondOpenDrawer.status).toBe('OPEN');
-    expect(secondOpenDrawer.change).toEqual([["TWENTY", 60], ["TEN", 20], ["FIVE", 15], ["ONE", 1], ["QUARTER", 0.5], ["DIME", 0.2], ["PENNY", 0.04]]);
+    expect(secondOpenDrawer.change).toEqual([['TWENTY', 60], ['TEN', 20], ['FIVE', 15], ['ONE', 1], ['QUARTER', 0.5], ['DIME', 0.2], ['PENNY', 0.04]]);
   });
 });
